@@ -43,6 +43,26 @@ func merge(array []interface{}, left, mid, right int, compare func(i, j int) boo
 	}
 }
 
-func QuickSort() {
+func QuickSort(array []interface{}, left int, right int, compare func(i, j int) bool) []interface{} {
+	if left < right {
+		pivot := partition(array, left, right, compare)
 
+		QuickSort(array, left, pivot-1, compare)
+		QuickSort(array, pivot+1, right, compare)
+	}
+	return array
+}
+
+func partition(array []interface{}, low int, high int, compare func(i, j int) bool) int {
+	i := low - 1
+	for j := low; j < high; j += 1 {
+		if compare(j, high) {
+			i += 1
+			array[i], array[j] = array[j], array[i]
+		}
+	}
+
+	array[i+1], array[high] = array[high], array[i+1]
+
+	return i + 1
 }
